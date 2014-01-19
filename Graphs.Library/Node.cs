@@ -10,8 +10,14 @@ namespace Graphs.Library
     {
         public int Data { get; set; }
 
-        public bool Visited { get; set; }
-
         public List<Edge> Neighbours { get; set; }
+
+        #region Auxiliary Properties
+        
+        public bool Visited { get; set; }
+        public int Distance { get; set; }
+        public Node Parent { get; set; } // used for paths
+
+        #endregion
     }
 }

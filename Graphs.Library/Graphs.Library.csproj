@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DFS_Iterative.cs" />
+    <Compile Include="UndirectedGraphProblems.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="Node.cs" />
