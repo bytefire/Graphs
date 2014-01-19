@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Graphs.Library
 {
-    public class Class1
+    public class Node
     {
+        public int Data { get; set; }
+
+        public bool Visited { get; set; }
+
+        public List<Edge> Neighbours { get; set; }
     }
 }
