@@ -1,4 +1,4 @@
 graphs
 ======
 
-Collection of solutions to graph problems
+Collection of solutions to some of the graph problems.
