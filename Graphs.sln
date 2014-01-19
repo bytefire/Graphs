@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphs.Console", "Graphs.Console\Graphs.Console.csproj", "{BA4F716A-6953-455A-86F0-C76362511613}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphs.Library", "Graphs.Library\Graphs.Library.csproj", "{94109D47-0CDF-4A5A-9472-EBB7E27B979E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA4F716A-6953-455A-86F0-C76362511613}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA4F716A-6953-455A-86F0-C76362511613}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA4F716A-6953-455A-86F0-C76362511613}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA4F716A-6953-455A-86F0-C76362511613}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94109D47-0CDF-4A5A-9472-EBB7E27B979E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94109D47-0CDF-4A5A-9472-EBB7E27B979E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94109D47-0CDF-4A5A-9472-EBB7E27B979E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94109D47-0CDF-4A5A-9472-EBB7E27B979E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
