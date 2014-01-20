@@ -32,6 +32,17 @@ namespace Graphs.Library
         }
 
         /// <summary>
+        /// Eulierian cycle. An Eulierian cycle in a graph is a cycle (not necessarily simple) that uses every edge in the graph exactly one.
+        /// Design a linear-time algorithm to determine whether a graph has an Eulerian cycle, and if so, find one.
+        /// </summary>
+        /// <param name="root">Any node in a given graph.</param>
+        /// <returns></returns>
+        public bool HasEulerianCycle(Node root)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Given a connected graph with no cycles, find its center.
         /// Center: design a linear-time algorithm to find a vertex such that its maximum distance from any other vertex is minimized.
         /// </summary>
