@@ -32,13 +32,34 @@ namespace Graphs.Library
         }
 
         /// <summary>
+        /// Given a connected graph with no cycles, find its center.
+        /// Center: design a linear-time algorithm to find a vertex such that its maximum distance from any other vertex is minimized.
+        /// </summary>
+        /// <param name="root">Any node of the graph.</param>
+        /// <returns>Centre of the graph.</returns>
+        /// <remarks>
+        /// Source: Algorithms II course on coursera.org.
+        /// </remarks>
+        public Node CentreOfGraph(Node root)
+        {
+            Stack<Node> diameter = DiameterOfGraph(root);
+            int centerLocationCounter = diameter.Count/2;
+            while (centerLocationCounter > 0)
+            {
+                diameter.Pop();
+                centerLocationCounter--;
+            }
+            return diameter.Pop();
+        }
+
+        /// <summary>
         /// Given a connected graph with no cycles, find diameter.
         /// Diameter: design a linear-time algorithm to find the longest simple path in the graph.
         /// </summary>
         /// <remarks>
         /// Source: Algorithms II course on coursera.org.
         /// </remarks>
-        public Stack<Node> DiameterOfAGraph(Node root)
+        public Stack<Node> DiameterOfGraph(Node root)
         {
             // algo: first find the farthest node from given node (root). that will be one end of diameter.
             //      then find the farthest node from that node. the path thus obtained will be the diameter.
