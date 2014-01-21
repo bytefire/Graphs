@@ -8,7 +8,7 @@ namespace Graphs.Library
 {
     public class Edge
     {
-        public Node To { get; set; }
+        public int ToIndex { get; set; }
         public int Weight { get; set; }
     }
 }

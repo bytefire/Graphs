@@ -8,6 +8,7 @@ namespace Graphs.Library
 {
     public class Node
     {
+        public int Index { get; set; }
         public int Data { get; set; }
 
         public List<Edge> Neighbours { get; set; }

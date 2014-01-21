@@ -8,8 +8,13 @@ namespace Graphs.Library
 {
     public class UndirectedGraphProblems
     {
-        public void PerformDfsItertatively(Node root, Action<Node> processNode)
+        public void PerformDfsItertatively(Graph g, Action<Node> processNode)
         {
+            if (g.Count == 0)
+            {
+                throw new ArgumentException("Graph is empty.");
+            }
+            Node root = g[0];
             Stack<Node> stack = new Stack<Node>();
 
             root.Visited = true;
@@ -22,10 +27,10 @@ namespace Graphs.Library
 
                 foreach (Edge e in temp.Neighbours)
                 {
-                    if (!e.To.Visited)
+                    if (!g[e.ToIndex].Visited)
                     {
-                        e.To.Visited = true;
-                        stack.Push(e.To);
+                        g[e.ToIndex].Visited = true;
+                        stack.Push(g[e.ToIndex]);
                     }
                 }
             }
@@ -42,6 +47,13 @@ namespace Graphs.Library
             throw new NotImplementedException();
         }
 
+        public Stack<Node> GetEulerianCycle(Node root)
+        {
+            // Uses Hierholzer's algorithm (see: http://www.youtube.com/watch?v=3k5_oooad8U)
+            throw new NotImplementedException();
+
+        }
+
         /// <summary>
         /// Given a connected graph with no cycles, find its center.
         /// Center: design a linear-time algorithm to find a vertex such that its maximum distance from any other vertex is minimized.
@@ -51,9 +63,9 @@ namespace Graphs.Library
         /// <remarks>
         /// Source: Algorithms II course on coursera.org.
         /// </remarks>
-        public Node CentreOfGraph(Node root)
+        public Node CentreOfGraph(Graph g)
         {
-            Stack<Node> diameter = DiameterOfGraph(root);
+            Stack<Node> diameter = DiameterOfGraph(g);
             int centerLocationCounter = diameter.Count/2;
             while (centerLocationCounter > 0)
             {
@@ -70,13 +82,13 @@ namespace Graphs.Library
         /// <remarks>
         /// Source: Algorithms II course on coursera.org.
         /// </remarks>
-        public Stack<Node> DiameterOfGraph(Node root)
+        public Stack<Node> DiameterOfGraph(Graph g)
         {
             // algo: first find the farthest node from given node (root). that will be one end of diameter.
             //      then find the farthest node from that node. the path thus obtained will be the diameter.
 
-            Node end1 = FindPathToFarthestNode(root);
-            Node end2 = FindPathToFarthestNode(end1);
+            Node end1 = FindPathToFarthestNode(g);
+            Node end2 = FindPathToFarthestNode(g);
 
             Node temp = end2;
             Stack<Node> diameter = new Stack<Node>();
@@ -96,8 +108,14 @@ namespace Graphs.Library
         /// </summary>
         /// <param name="root">The node to measure distance from.</param>
         /// <returns></returns>
-        public Node FindPathToFarthestNode(Node root)
+        public Node FindPathToFarthestNode(Graph g)
         {
+            if (g.Count == 0)
+            {
+                throw new ArgumentException("Graph is empty.");
+            }
+
+            Node root = g[0];
             Node farthest = root;
             int maximumDistance = 0;
             Stack<Node> stack = new Stack<Node>();
@@ -116,13 +134,13 @@ namespace Graphs.Library
 
                 foreach (Edge e in temp.Neighbours)
                 {
-                    if (!e.To.Visited)
+                    if (!g[e.ToIndex].Visited)
                     {
                         hasUnvisitedNeighbours = true;
-                        e.To.Visited = true;
-                        e.To.Distance = temp.Distance + 1;
-                        e.To.Parent = temp;
-                        stack.Push(e.To);
+                        g[e.ToIndex].Visited = true;
+                        g[e.ToIndex].Distance = temp.Distance + 1;
+                        g[e.ToIndex].Parent = temp;
+                        stack.Push(g[e.ToIndex]);
                     }
                 }
 
