@@ -8,7 +8,7 @@ namespace Graphs.Library
 {
     public class Node
     {
-        public int Index { get; set; }
+        public int Index { get; private set; }
         public int Data { get; set; }
 
         public List<Edge> Neighbours { get; set; }
@@ -20,5 +20,20 @@ namespace Graphs.Library
         public Node Parent { get; set; } // used for paths
 
         #endregion
+
+        public Node(int index)
+        {
+            Index = index;
+        }
+
+        public override int GetHashCode()
+        {
+            return Index;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return (GetHashCode() == obj.GetHashCode());
+        }
     }
 }

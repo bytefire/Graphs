@@ -47,11 +47,10 @@ namespace Graphs.Library
             throw new NotImplementedException();
         }
 
-        public Stack<Node> GetEulerianCycle(Node root)
+        public List<Node> GetEulerianCycle(Graph g)
         {
             // Uses Hierholzer's algorithm (see: http://www.youtube.com/watch?v=3k5_oooad8U)
             throw new NotImplementedException();
-
         }
 
         /// <summary>
@@ -156,5 +155,7 @@ namespace Graphs.Library
 
             return farthest;
         }
+
+
     }
 }
