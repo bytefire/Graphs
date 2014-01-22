@@ -6,17 +6,22 @@ using System.Threading.Tasks;
 
 namespace Graphs.Library
 {
-    public class Graph
+    public abstract class Graph
     {
-        private Node[] _nodes;
+        protected Node[] _nodes;
 
-        // NOTE: this is different from capacity. this indicates how many vertices
-        //      the graph has. capacity is the maximum number of vertices the graph
-        //      could have.
+        /// <summary>
+        /// Gets the number of nodes in the graph.
+        /// </summary>
+        /// <remarks>
+        /// This is different from capacity. this indicates how many vertices
+        /// the graph has. capacity is the maximum number of vertices the graph
+        /// could have.
+        /// </remarks>
         public int Count
         {
             get;
-            private set;
+            protected set;
         }
 
         public Graph(int capacity)
@@ -38,6 +43,27 @@ namespace Graphs.Library
             {
                 _nodes[index] = value;
             }
+        }
+
+        public virtual void RemoveEdge(int nodeX, int nodeY)
+        {
+            Edge e = null;
+            int i;
+            // find the edge to remove
+            for (i = 0; i < _nodes[nodeX].Neighbours.Count; i++)
+            {
+                if (_nodes[nodeX].Neighbours[i].ToIndex == nodeY)
+                {
+                    e = _nodes[nodeX].Neighbours[i];
+                    break;
+                }
+            }
+            // if edge not found then simply return
+            if (e == null)
+            {
+                return;
+            }
+            _nodes[nodeX].Neighbours.RemoveAt(i);
         }
     }
 }

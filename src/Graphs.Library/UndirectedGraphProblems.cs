@@ -50,6 +50,17 @@ namespace Graphs.Library
         public List<Node> GetEulerianCycle(Graph g)
         {
             // Uses Hierholzer's algorithm (see: http://www.youtube.com/watch?v=3k5_oooad8U)
+            List<Node> eulerianCycle = new List<Node>();
+            List<Node> tempCycle;
+            Node tempNode;
+            while (g.Count > 0)
+            {
+                tempCycle = new List<Node>();
+                // the fact that the node exists implies that there is an edge from that node.
+                tempNode = g[0];
+                tempCycle.Add(tempNode);
+                tempCycle.Add(g[tempNode.Neighbours[0].ToIndex]);
+            }
             throw new NotImplementedException();
         }
 

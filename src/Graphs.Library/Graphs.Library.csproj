@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UndirectedGraph.cs" />
     <Compile Include="UndirectedGraphProblems.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="Graph.cs" />
