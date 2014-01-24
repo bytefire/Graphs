@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Graphs.Library
 {
-    public abstract class Graph
+    public abstract class Graph : IEnumerable
     {
         protected Node[] _nodes;
 
@@ -48,6 +49,14 @@ namespace Graphs.Library
             set
             {
                 _nodes[index] = value;
+            }
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            for (int i = 0; i < _nodes.Length; i++)
+            {
+                yield return _nodes[i];
             }
         }
 

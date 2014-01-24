@@ -41,11 +41,27 @@ namespace Graphs.Library
         /// Eulierian cycle. An Eulierian cycle in a graph is a cycle (not necessarily simple) that uses every edge in the graph exactly one.
         /// Design a linear-time algorithm to determine whether a graph has an Eulerian cycle, and if so, find one.
         /// </summary>
-        /// <param name="root">Any node in a given graph.</param>
+        /// <param name="g">The undirected graph.</param>
         /// <returns></returns>
-        public bool HasEulerianCycle(Node root)
+        public bool HasEulerianCycle(UndirectedGraph g)
         {
-            throw new NotImplementedException();
+            foreach (Node n in g)
+            {
+                if (n.Neighbours.Count % 2 != 0)
+                {
+                    return false;
+                }
+            }
+
+            PerformDfsItertatively(g, n => { n.Visited = true; });
+            foreach (Node n in g)
+            {
+                if (n.Neighbours.Count > 0 && !n.Visited)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         /// <summary>
         /// Eulierian cycle. An Eulierian cycle in a graph is a cycle (not necessarily simple) that uses every edge in the graph exactly one.
