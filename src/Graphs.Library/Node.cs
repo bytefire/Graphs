@@ -35,5 +35,14 @@ namespace Graphs.Library
         {
             return (GetHashCode() == obj.GetHashCode());
         }
+
+        public static bool operator ==(Node left, Node right)
+        {
+            return left.Equals(right);
+        }
+        public static bool operator !=(Node left, Node right)
+        {
+            return !left.Equals(right);
+        }
     }
 }

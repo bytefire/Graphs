@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Graphs.Utilities;
 
 namespace Graphs.Library
 {
@@ -46,22 +47,70 @@ namespace Graphs.Library
         {
             throw new NotImplementedException();
         }
-
-        public List<Node> GetEulerianCycle(Graph g)
+        /// <summary>
+        /// Eulierian cycle. An Eulierian cycle in a graph is a cycle (not necessarily simple) that uses every edge in the graph exactly one.
+        /// Design a linear-time algorithm to determine whether a graph has an Eulerian cycle, and if so, find one.
+        /// </summary>
+        /// <param name="root">Any node in a given graph.</param>
+        /// <returns>Eulerian cycle.</returns>
+        public LinkedList<Node> GetEulerianCycle(UndirectedGraph g)
         {
+            // TestTODO: need to test this properly
+
             // Uses Hierholzer's algorithm (see: http://www.youtube.com/watch?v=3k5_oooad8U)
-            List<Node> eulerianCycle = new List<Node>();
-            List<Node> tempCycle;
-            Node tempNode;
+            LinkedList<Node> eulerianCycle = new LinkedList<Node>();
+            LinkedList<Node> tempCycle;
+            Node nextNode;
+            Node startNode = null;
+            Edge e;
             while (g.Count > 0)
             {
-                tempCycle = new List<Node>();
-                // the fact that the node exists implies that there is an edge from that node.
-                tempNode = g[0];
-                tempCycle.Add(tempNode);
-                tempCycle.Add(g[tempNode.Neighbours[0].ToIndex]);
+                // by the end of this loop startNode must be set to a non-null node because 
+                // g.Count > 0.
+                for (int i = 0; i < g.Capacity; i++)
+                {
+                    if (g[i] != null)
+                    {
+                        startNode = g[i];
+                        break;
+                    }
+                }
+                nextNode = startNode;
+                tempCycle = new LinkedList<Node>();
+                do
+                {
+                    tempCycle.AddLast(nextNode);
+                    e = nextNode.Neighbours[0];
+                    int fromIndex = nextNode.Index;
+                    nextNode = g[e.ToIndex];
+                    g.RemoveEdge(fromIndex, e.ToIndex);
+                    g.RemoveNodeIfUnconnected(fromIndex);
+                } while (nextNode != startNode);
+
+                // merge temp into eulerian cycle
+                eulerianCycle = eulerianCycle.InsertAtMatchingStart(tempCycle);
             }
-            throw new NotImplementedException();
+            return eulerianCycle;
+        }
+
+        private void MergeIntoParentCycle(LinkedList<Node> parent, LinkedList<Node> child)
+        {
+            //if (parent.Count < 2)
+            //{
+            //    parent.Clear();
+            //    parent = child;
+            //}
+            //Node startNode = child.First.Value;
+            //LinkedListNode<Node> curr = parent.Find(startNode);
+            //if (curr.Previous == null)
+            //{
+            //    curr = curr.Next;
+            //    parent.RemoveFirst();
+            //    parent.AddBefore(
+            //}
+            //curr = curr.Previous;
+            //eulerianCycle.Remove(curr.Next);
+            //eulerianCycle.AddAfter(curr, tempCycle.First);
         }
 
         /// <summary>

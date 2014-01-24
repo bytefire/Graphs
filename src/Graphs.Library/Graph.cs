@@ -24,6 +24,12 @@ namespace Graphs.Library
             protected set;
         }
 
+        public int Capacity
+        {
+            get;
+            protected set;
+        }
+
         public Graph(int capacity)
         {
             if (capacity < 1)
