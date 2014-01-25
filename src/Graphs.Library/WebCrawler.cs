@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Graphs.Library
@@ -70,8 +71,16 @@ namespace Graphs.Library
 
         private IEnumerable<string> ExtractUrls(string webPage)
         {
-            // regexp for url: http://(\\w+\\.)*(\\w+)
-            throw new NotImplementedException();
+            // regex for url: http://(\\w+\\.)*(\\w+)
+            // TestTODO: check if this regex is correct.
+            MatchCollection matches = Regex.Matches(webPage, 
+                                        @"((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)");
+            List<string> linkedUrls = new List<string>();
+            foreach (Match match in matches)
+            {
+                linkedUrls.Add(match.Value);
+            }
+            return linkedUrls;
         }
     }
 }
