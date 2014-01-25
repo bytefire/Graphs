@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Graphs.Library
 {
     /// <summary>
-    /// These problems don't care whether the graph is directed or not.
+    /// These problems don't care whether the graph is directed or not. However, the graph is expected to be unweighted.
     /// </summary>
     public class GeneralGraphProblems
     {
