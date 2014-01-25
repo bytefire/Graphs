@@ -9,34 +9,6 @@ namespace Graphs.Library
 {
     public class UndirectedGraphProblems
     {
-        public void PerformDfsItertatively(Graph g, Action<Node> processNode)
-        {
-            if (g.Count == 0)
-            {
-                throw new ArgumentException("Graph is empty.");
-            }
-            Node root = g[0];
-            Stack<Node> stack = new Stack<Node>();
-
-            root.Visited = true;
-            stack.Push(root);
-            Node temp;
-            while (stack.Count > 0)
-            {
-                temp = stack.Pop();
-                processNode(temp);
-
-                foreach (Edge e in temp.Neighbours)
-                {
-                    if (!g[e.ToIndex].Visited)
-                    {
-                        g[e.ToIndex].Visited = true;
-                        stack.Push(g[e.ToIndex]);
-                    }
-                }
-            }
-        }
-
         /// <summary>
         /// Eulierian cycle. An Eulierian cycle in a graph is a cycle (not necessarily simple) that uses every edge in the graph exactly one.
         /// Design a linear-time algorithm to determine whether a graph has an Eulerian cycle, and if so, find one.
@@ -47,16 +19,16 @@ namespace Graphs.Library
         {
             foreach (Node n in g)
             {
-                if (n.Neighbours.Count % 2 != 0)
+                if (n.Edges.Count % 2 != 0)
                 {
                     return false;
                 }
             }
 
-            PerformDfsItertatively(g, n => { n.Visited = true; });
+            GeneralGraphProblems.PerformDfsItertatively(g, n => { n.Visited = true; });
             foreach (Node n in g)
             {
-                if (n.Neighbours.Count > 0 && !n.Visited)
+                if (n.Edges.Count > 0 && !n.Visited)
                 {
                     return false;
                 }
@@ -96,7 +68,7 @@ namespace Graphs.Library
                 do
                 {
                     tempCycle.AddLast(nextNode);
-                    e = nextNode.Neighbours[0];
+                    e = nextNode.Edges[0];
                     int fromIndex = nextNode.Index;
                     nextNode = g[e.ToIndex];
                     g.RemoveEdge(fromIndex, e.ToIndex);
@@ -107,26 +79,6 @@ namespace Graphs.Library
                 eulerianCycle = eulerianCycle.InsertAtMatchingStart(tempCycle);
             }
             return eulerianCycle;
-        }
-
-        private void MergeIntoParentCycle(LinkedList<Node> parent, LinkedList<Node> child)
-        {
-            //if (parent.Count < 2)
-            //{
-            //    parent.Clear();
-            //    parent = child;
-            //}
-            //Node startNode = child.First.Value;
-            //LinkedListNode<Node> curr = parent.Find(startNode);
-            //if (curr.Previous == null)
-            //{
-            //    curr = curr.Next;
-            //    parent.RemoveFirst();
-            //    parent.AddBefore(
-            //}
-            //curr = curr.Previous;
-            //eulerianCycle.Remove(curr.Next);
-            //eulerianCycle.AddAfter(curr, tempCycle.First);
         }
 
         /// <summary>
@@ -207,7 +159,7 @@ namespace Graphs.Library
                 temp = stack.Pop();
                 bool hasUnvisitedNeighbours = false;
 
-                foreach (Edge e in temp.Neighbours)
+                foreach (Edge e in temp.Edges)
                 {
                     if (!g[e.ToIndex].Visited)
                     {

@@ -65,11 +65,11 @@ namespace Graphs.Library
             Edge e = null;
             int i;
             // find the edge to remove
-            for (i = 0; i < _nodes[nodeX].Neighbours.Count; i++)
+            for (i = 0; i < _nodes[nodeX].Edges.Count; i++)
             {
-                if (_nodes[nodeX].Neighbours[i].ToIndex == nodeY)
+                if (_nodes[nodeX].Edges[i].ToIndex == nodeY)
                 {
-                    e = _nodes[nodeX].Neighbours[i];
+                    e = _nodes[nodeX].Edges[i];
                     break;
                 }
             }
@@ -78,7 +78,7 @@ namespace Graphs.Library
             {
                 return;
             }
-            _nodes[nodeX].Neighbours.RemoveAt(i);
+            _nodes[nodeX].Edges.RemoveAt(i);
         }
     }
 }

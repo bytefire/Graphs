@@ -39,7 +39,7 @@ namespace Graphs.Library
 
             // node is unconnected if it has no edges.
             // NOTE: this check only makes sense in undirected graphs.
-            if (_nodes[node].Neighbours.Count == 0)
+            if (_nodes[node].Edges.Count == 0)
             {
                 _nodes[node] = null;
                 Count--;

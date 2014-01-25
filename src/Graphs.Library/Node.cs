@@ -11,7 +11,7 @@ namespace Graphs.Library
         public int Index { get; private set; }
         public int Data { get; set; }
 
-        public List<Edge> Neighbours { get; set; }
+        public List<Edge> Edges { get; set; }
 
         #region Auxiliary Properties
         
