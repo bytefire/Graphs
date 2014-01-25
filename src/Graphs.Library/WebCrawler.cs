@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,7 +54,18 @@ namespace Graphs.Library
 
         private string ReadWebPage(string url)
         {
-            throw new NotImplementedException();
+            WebRequest request = WebRequest.Create(url);
+            WebResponse response = request.GetResponse();
+            Stream data = response.GetResponseStream();
+            string webPage = String.Empty;
+
+            // ImproveTODO: rather than read the page and then search for linked URLs,
+            //      it will be better to read the stream line-by-line and return URLs via IEnumerator.
+            using (StreamReader sr = new StreamReader(data))
+            {
+                webPage = sr.ReadToEnd();
+            }
+            return webPage;
         }
 
         private IEnumerable<string> ExtractUrls(string webPage)

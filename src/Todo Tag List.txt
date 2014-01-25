@@ -1,0 +1,5 @@
+Every todo tag used in the code must have an entry here. Every entry here must be justified.
+
+TODO - any work that needs to be done
+TestTODO - to point out a test scenario or to stress the need of testing that particular piece of code.
+ImproveTODO - to point out an improvement, be it performance, design or something else.
