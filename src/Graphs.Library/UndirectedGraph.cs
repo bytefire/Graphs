@@ -19,6 +19,12 @@ namespace Graphs.Library
             base.RemoveEdge(nodeY, nodeX);
         }
 
+        public override void InsertEdge(int nodeX, int nodeY, int weight = 0)
+        {
+            base.InsertEdge(nodeX, nodeY, weight);
+            base.InsertEdge(nodeY, nodeX, weight);
+        }
+
         /// <summary>
         /// Removes a node if it is not connected to any other node. If the node is connected
         /// to at least one other node then this method returns false and leaves the node as it is.

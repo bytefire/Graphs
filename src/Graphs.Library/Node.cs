@@ -13,6 +13,7 @@ namespace Graphs.Library
 
         public List<Edge> Edges { get; set; }
 
+        // TODO: get rid of auxiliary properties
         #region Auxiliary Properties
         
         public bool Visited { get; set; }
@@ -24,6 +25,7 @@ namespace Graphs.Library
         public Node(int index)
         {
             Index = index;
+            Edges = new List<Edge>();
         }
 
         public override int GetHashCode()

@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace Graphs.Library
 {
-    public abstract class Graph : IEnumerable
+    /// <summary>
+    /// Directed weighted graph.
+    /// </summary>
+    public class Graph : IEnumerable
     {
         protected Node[] _nodes;
 
@@ -46,10 +49,6 @@ namespace Graphs.Library
             {
                 return _nodes[index];
             }
-            set
-            {
-                _nodes[index] = value;
-            }
         }
 
         public IEnumerator GetEnumerator()
@@ -79,6 +78,45 @@ namespace Graphs.Library
                 return;
             }
             _nodes[nodeX].Edges.RemoveAt(i);
+        }
+
+        public virtual void InsertEdge(int nodeX, int nodeY, int weight = 0)
+        {
+            Edge e = new Edge();
+            e.ToIndex = nodeY;
+            e.Weight = weight;
+            _nodes[nodeX].Edges.Add(e);
+        }
+
+        // OptimiseTODO: this is O(V*E). can this be optimised?
+        public Graph Reverse()
+        {
+            Graph reverse = new Graph(this.Capacity);
+            // first create all nodes
+            foreach (Node n in _nodes)
+            {
+                if (n == null)
+                {
+                    continue;
+                }
+                reverse._nodes[n.Index] = new Node(n.Index);
+                reverse._nodes[n.Index].Data = n.Data;
+            }
+
+            // insert reversed edges
+            foreach (Node n in _nodes)
+            {
+                if (n == null)
+                {
+                    continue;
+                }
+                
+                foreach (Edge e in n.Edges)
+                {
+                    reverse.InsertEdge(e.ToIndex, n.Index, e.Weight);
+                }
+            }
+            return reverse;
         }
     }
 }
