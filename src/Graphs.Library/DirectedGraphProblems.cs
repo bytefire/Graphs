@@ -85,5 +85,46 @@ namespace Graphs.Library
             }
             return false;
         }
+
+        /// <summary>
+        /// Uses Kosaraju's algorithm (http://en.wikipedia.org/wiki/Kosaraju%27s_algorithm) to find strongly
+        /// connected components.
+        /// </summary>
+        /// <param name="g">The graph to find the components in.</param>
+        /// <returns>Array whose indices represent nodes and values denote strongly connected components.</returns>
+        public static int[] StronglyConnectedComponents(Graph g)
+        {
+            if (g.Count == 0)
+            {
+                throw new ArgumentException("Graph is empty.");
+            }
+
+            int[] scc = new int[g.Capacity];
+            for (int i = 0; i < scc.Length; i++)
+            {
+                scc[i] = -1;
+            }
+            IEnumerable<Node> topological = TopologicalSort(g);
+            Graph reverse = g.Reverse();
+            // NOTE: this array does the work of Node.Visited property. so when we get rid of Node.Visited property,
+            //      we should use a data structure similar to this.
+            bool[] marked = new bool[reverse.Capacity];
+            int counter = 0;
+            foreach (Node n in topological)
+            {
+                if (marked[n.Index])
+                {
+                    continue;
+                }
+
+                GeneralGraphProblems.PerformDfsItertatively(reverse, node => 
+                { 
+                    marked[node.Index] = true;
+                    scc[node.Index] = counter;
+                });
+                counter++;
+            }
+            return scc;
+        }
     }
 }
