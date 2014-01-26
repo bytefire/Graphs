@@ -11,26 +11,12 @@ namespace Graphs.Library
     /// </summary>
     public class DirectedGraphProblems
     {
-        // this can only be performed on a directed acyclic graph.
+        // this won't make sense if the graph is cyclic even though it will finish with a result.
         public static IEnumerable<Node> TopologicalSort(Graph g)
         {
             if (g.Count == 0)
             {
                 throw new ArgumentException("Graph is empty.");
-            }
-
-            // first check for cycles
-            foreach (Node n in g)
-            {
-                if (n == null || n.Visited)
-                {
-                    continue;
-                }
-
-                if (ContainsCycle(g, n.Index))
-                {
-                    throw new ArgumentException("The graph contains cycles.");
-                }
             }
 
             Stack<Node> stack = new Stack<Node>();
@@ -43,16 +29,18 @@ namespace Graphs.Library
                 {
                     continue;
                 }
+                n.Visited = true;
                 stack.Push(n);
 
                 while (stack.Count > 0)
                 {
-                    temp = stack.Pop();
+                    temp = stack.Peek();
                     bool hasUnvisitedEdges = false;
                     foreach (Edge e in temp.Edges)
                     {
                         if (!g[e.ToIndex].Visited)
                         {
+                            g[e.ToIndex].Visited = true;
                             stack.Push(g[e.ToIndex]);
                             hasUnvisitedEdges = true;
                         }
@@ -61,7 +49,7 @@ namespace Graphs.Library
                     if (!hasUnvisitedEdges)
                     {
                         topologicallySorted.Push(temp);
-                        temp.Visited = true;
+                        stack.Pop();
                     }
                 }
             }
