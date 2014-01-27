@@ -19,8 +19,9 @@ namespace Graphs.Library
             }
             Node root = g[startingNode];
             Stack<Node> stack = new Stack<Node>();
+            bool[] marked = new bool[g.Capacity];
 
-            root.Visited = true;
+            marked[root.Index] = true;
             stack.Push(root);
             Node temp;
             while (stack.Count > 0)
@@ -30,31 +31,36 @@ namespace Graphs.Library
 
                 foreach (Edge e in temp.Edges)
                 {
-                    if (!g[e.ToIndex].Visited)
+                    if (!marked[e.ToIndex])
                     {
-                        g[e.ToIndex].Visited = true;
+                        marked[e.ToIndex] = true;
                         stack.Push(g[e.ToIndex]);
                     }
                 }
             }
         }
 
-        public static void PerformDfsRecursively(Graph g, Action<Node> processNode, int startingNode = 0)
+        public static void PerformDfsRecursively(Graph g, Action<Node> processNode, bool[] marked, int startingNode = 0)
         {
             if (g.Count == 0)
             {
                 throw new ArgumentException("Graph is empty.");
             }
 
+            if (marked == null || marked.Length != g.Capacity)
+            {
+                throw new ArgumentException("The marked array's length must be equal to the capacity of the graph.");
+            }
+
             Node n = g[startingNode];
-            n.Visited = true;
+            marked[n.Index] = true;
             processNode(n);
 
             foreach (Edge e in n.Edges)
             {
-                if (!g[e.ToIndex].Visited)
+                if (!marked[e.ToIndex])
                 {
-                    PerformDfsRecursively(g, processNode, e.ToIndex);
+                    PerformDfsRecursively(g, processNode, marked, e.ToIndex);
                 }
             }
         }
@@ -72,8 +78,10 @@ namespace Graphs.Library
                 paths[p] = -1;
             }
             Queue<Node> q = new Queue<Node>();
+            bool[] marked = new bool[g.Capacity];
             Node n = g[startingNode];
-            n.Visited = true;
+            
+            marked[n.Index] = true;
             q.Enqueue(n);
             paths[startingNode] = startingNode;
 
@@ -83,9 +91,9 @@ namespace Graphs.Library
                 processNode(n);
                 foreach (Edge e in n.Edges)
                 {
-                    if (!g[e.ToIndex].Visited)
+                    if (!marked[e.ToIndex])
                     {
-                        g[e.ToIndex].Visited = true;
+                        marked[e.ToIndex] = true;
                         q.Enqueue(g[e.ToIndex]);
                         paths[e.ToIndex] = n.Index;
                     }
@@ -115,11 +123,12 @@ namespace Graphs.Library
                 paths[p] = -1;
             }
             Queue<Node> q = new Queue<Node>();
+            bool[] marked = new bool[g.Capacity];
             Node n;
             foreach (int i in startingNodes)
             {
                 n = g[i];
-                n.Visited = true;
+                marked[n.Index] = true;
                 q.Enqueue(n);
                 paths[i] = i;
                 if (n.Data == searchedValue)
@@ -133,9 +142,9 @@ namespace Graphs.Library
                 n = q.Dequeue();
                 foreach (Edge e in n.Edges)
                 {
-                    if (!g[e.ToIndex].Visited)
+                    if (!marked[e.ToIndex])
                     {
-                        g[e.ToIndex].Visited = true;
+                        marked[e.ToIndex] = true;
                         q.Enqueue(g[e.ToIndex]);
                         paths[e.ToIndex] = n.Index;
                         if (g[e.ToIndex].Data == searchedValue)

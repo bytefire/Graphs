@@ -16,7 +16,6 @@ namespace Graphs.Library
         // TODO: get rid of auxiliary properties
         #region Auxiliary Properties
         
-        public bool Visited { get; set; }
         public int Distance { get; set; }
         public Node Parent { get; set; } // used for paths
 

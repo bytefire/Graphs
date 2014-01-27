@@ -21,15 +21,16 @@ namespace Graphs.Library
 
             Stack<Node> stack = new Stack<Node>();
             Stack<Node> topologicallySorted = new Stack<Node>();
+            bool[] marked = new bool[g.Capacity];
             Node temp;
             
             foreach (Node n in g)
             {
-                if ((n == null) || n.Visited)
+                if ((n == null) || marked[n.Index])
                 {
                     continue;
                 }
-                n.Visited = true;
+                marked[n.Index] = true;
                 stack.Push(n);
 
                 while (stack.Count > 0)
@@ -38,9 +39,9 @@ namespace Graphs.Library
                     bool hasUnvisitedEdges = false;
                     foreach (Edge e in temp.Edges)
                     {
-                        if (!g[e.ToIndex].Visited)
+                        if (!marked[e.ToIndex])
                         {
-                            g[e.ToIndex].Visited = true;
+                            marked[e.ToIndex] = true;
                             stack.Push(g[e.ToIndex]);
                             hasUnvisitedEdges = true;
                         }
@@ -67,7 +68,8 @@ namespace Graphs.Library
             // perform DFS looking for a back edge
             Node n = g[startingNode];
             Stack<Node> stack = new Stack<Node>();
-            n.Visited = true;
+            bool[] marked = new bool[g.Capacity];
+            marked[n.Index] = true;
             stack.Push(n);
 
             while (stack.Count > 0)
@@ -75,11 +77,11 @@ namespace Graphs.Library
                 n = stack.Pop();
                 foreach (Edge e in n.Edges)
                 {
-                    if (g[e.ToIndex].Visited)
+                    if (marked[e.ToIndex])
                     {
                         return true;
                     }
-                    g[e.ToIndex].Visited = true;
+                    marked[e.ToIndex] = true;
                     stack.Push(g[e.ToIndex]);
                 }
             }

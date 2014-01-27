@@ -24,11 +24,11 @@ namespace Graphs.Library
                     return false;
                 }
             }
-
-            GeneralGraphProblems.PerformDfsItertatively(g, n => { n.Visited = true; });
+            bool[] marked = new bool[g.Capacity];
+            GeneralGraphProblems.PerformDfsItertatively(g, n => { marked[n.Index] = true; });
             foreach (Node n in g)
             {
-                if (n.Edges.Count > 0 && !n.Visited)
+                if (n.Edges.Count > 0 && !marked[n.Index])
                 {
                     return false;
                 }
@@ -146,9 +146,10 @@ namespace Graphs.Library
             Node farthest = root;
             int maximumDistance = 0;
             Stack<Node> stack = new Stack<Node>();
+            bool[] marked = new bool[g.Capacity];
 
             root.Distance = 0;
-            root.Visited = true;
+            marked[root.Index] = true;
             root.Parent = null;
             stack.Push(root);
 
@@ -161,10 +162,10 @@ namespace Graphs.Library
 
                 foreach (Edge e in temp.Edges)
                 {
-                    if (!g[e.ToIndex].Visited)
+                    if (!marked[e.ToIndex])
                     {
                         hasUnvisitedNeighbours = true;
-                        g[e.ToIndex].Visited = true;
+                        marked[e.ToIndex] = true;
                         g[e.ToIndex].Distance = temp.Distance + 1;
                         g[e.ToIndex].Parent = temp;
                         stack.Push(g[e.ToIndex]);
