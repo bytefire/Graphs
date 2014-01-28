@@ -128,5 +128,134 @@ namespace Graphs.Library
             }
             return scc;
         }
+
+        /// <summary>
+        /// Shortest directed cycle. Given a digraph G, design an efficient algorithm to find a directed cycle 
+        /// with the minimum number of edges (or report that the graph is acyclic). 
+        /// The running time of your algorithm should be at most proportional to V(E+V) and use space proportional 
+        /// to E+V, where V is the number of vertices and E is the number of edges.
+        /// (from coursera)
+        /// </summary>
+        /// <param name="g">Graph to find the cycle in.</param>
+        /// <param name="startingIndex">Optional starting index.</param>
+        /// <returns>List of indices for nodes which form the shortest cycle.</returns>
+        public static IEnumerable<int> ShortestCycle(Graph g, int startingIndex = 0)
+        {
+            bool[] marked = new bool[g.Capacity];
+            int[] connectedComponents = new int[g.Capacity];
+            Array.ForEach(connectedComponents, cc => cc = -1);
+            int currentComponent = 0;
+            int shortestLength = Int32.MaxValue;
+            IEnumerable<int> shortestCycle = null;
+            int unmarked = -1;
+            bool foundUnmarked = false;
+            for (unmarked = 0, foundUnmarked = false; unmarked < marked.Length; unmarked++)
+            {
+                if (!marked[unmarked])
+                {
+                    foundUnmarked = true;
+                    break;
+                }
+            }
+
+            while (foundUnmarked)
+            {
+                IEnumerable<int> cycle = ShortestCycleInReachableNodes(g, unmarked, marked, connectedComponents, currentComponent);
+                if (cycle.Count() < shortestLength)
+                {
+                    shortestLength = cycle.Count();
+                    shortestCycle = cycle;
+                }
+
+                currentComponent++;
+
+                for (unmarked = 0, foundUnmarked = false; unmarked < marked.Length; unmarked++)
+                {
+                    if (!marked[unmarked])
+                    {
+                        foundUnmarked = true;
+                        break;
+                    }
+                }
+            }
+
+            if (shortestLength < Int32.MaxValue)
+            {
+                return shortestCycle;
+            }
+            return new List<int>();
+        }
+
+
+        private static IEnumerable<int> ShortestCycleInReachableNodes(Graph g, int startingNode, bool[] marked,
+            int[] connectedComponents, int currentComponent)
+        {
+            // idea: perform a BFS and look for back edges and keep a running count for each back edge. at the end of BFS, shortest count
+            // should represent shortest cycle.
+            Queue<Node> q = new Queue<Node>();
+            int[] levels = new int[g.Capacity];
+            int[] parents = new int[g.Capacity];
+            Array.ForEach(parents, p => p = -1);
+            int currentLevel = 0;
+            Node n = g[startingNode];
+            int shortestDistance = Int32.MaxValue;
+            int shortestFirst = -1, shortestLast = -1;
+            
+            marked[n.Index] = true;
+            levels[n.Index] = currentLevel;
+            connectedComponents[n.Index] = currentComponent;
+            parents[n.Index] = n.Index;
+            q.Enqueue(n);
+
+            while (q.Count > 0)
+            {
+                n = q.Dequeue();
+                currentLevel++;
+
+                foreach (Edge e in n.Edges)
+                {
+                    if (marked[e.ToIndex])
+                    {
+                        if (connectedComponents[e.ToIndex] == currentComponent)
+                        {
+                            int distance = currentLevel - levels[e.ToIndex];
+                            if (distance < shortestDistance)
+                            {
+                                shortestDistance = distance;
+                                shortestFirst = e.ToIndex;
+                                shortestLast = n.Index;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        marked[e.ToIndex] = true;
+                        levels[e.ToIndex] = currentLevel;
+                        connectedComponents[e.ToIndex] = currentComponent;
+                        parents[e.ToIndex] = n.Index;
+                        q.Enqueue(g[e.ToIndex]);
+                    }
+                }
+            }
+
+            if (shortestDistance < Int32.MaxValue)
+            {
+                return GetCycle(parents, shortestFirst, shortestLast);
+            }
+            return new List<int>();
+        }
+
+        private static IEnumerable<int> GetCycle(int[] parents, int shortestFirst, int shortestLast)
+        {
+            Stack<int> stack = new Stack<int>();
+            stack.Push(shortestLast);
+            int parent;
+            do
+            {
+                parent = parents[shortestLast];
+                stack.Push(parent);
+            } while (parent != shortestFirst) ;
+            return stack;
+        }
     }
 }
