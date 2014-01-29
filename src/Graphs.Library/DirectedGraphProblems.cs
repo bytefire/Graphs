@@ -169,6 +169,33 @@ namespace Graphs.Library
         }
 
         /// <summary>
+        /// Design a linear-time algorithm to determine whether a DAG has a vertex that is 
+        /// reachable from every other vertex, and if so, find one. 
+        /// </summary>
+        /// <param name="dag">The directed acyclic graph.</param>
+        /// <returns>Index of the reachable vertex (node) if it exists; -1 otherwise.</returns>
+        public static int ReachableVertexInDAG(Graph dag)
+        {
+            // find a vertex which doesn't have any outgoing edges. if there is only one such vertex then
+            // that is the reachable vertex. if there are more than one, then reachable vertex doesn't exist.
+            int vertex = -1;
+            int count = 0;
+            foreach (Node n in dag)
+            {
+                if (n.Edges.Count == 0)
+                {
+                    count++;
+                    if (count > 1)
+                    {
+                        return -1;
+                    }
+                    vertex = n.Index;
+                }
+            }
+            return vertex;
+        }
+
+        /// <summary>
         /// Shortest directed cycle. Given a digraph G, design an efficient algorithm to find a directed cycle 
         /// with the minimum number of edges (or report that the graph is acyclic). 
         /// The running time of your algorithm should be at most proportional to V(E+V) and use space proportional 
