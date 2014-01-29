@@ -130,6 +130,22 @@ namespace Graphs.Library
         }
 
         /// <summary>
+        /// Hamiltonian path in a DAG. Given a directed acyclic graph, design a linear-time algorithm 
+        /// to determine whether it has a Hamiltonian path (a simple path that visits every vertex), and if so, find one.
+        /// (from coursera)
+        /// </summary>
+        /// <param name="g">The directed acyclic graph.</param>
+        /// <returns>A path that goes through every vertex.</returns>
+        public static IEnumerable<int> HamiltonianPathInDAG(Graph g)
+        {
+            // idea: first topologically sort the graph. this should be fine because every dag can be topologically sorted.
+            // then every edge will be pointing forward. if there is an edge between each pair of adjacent topologically sorted
+            // vertices then hamiltonian path exists and that is the hamiltonian path.
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Shortest directed cycle. Given a digraph G, design an efficient algorithm to find a directed cycle 
         /// with the minimum number of edges (or report that the graph is acyclic). 
         /// The running time of your algorithm should be at most proportional to V(E+V) and use space proportional 
