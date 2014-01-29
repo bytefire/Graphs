@@ -12,7 +12,7 @@ namespace Graphs.Library
     public class DirectedGraphProblems
     {
         // this won't make sense if the graph is cyclic even though it will finish with a result.
-        public static IEnumerable<Node> TopologicalSort(Graph g)
+        public static LinkedList<int> TopologicalSort(Graph g)
         {
             if (g.Count == 0)
             {
@@ -20,7 +20,7 @@ namespace Graphs.Library
             }
 
             Stack<Node> stack = new Stack<Node>();
-            Stack<Node> topologicallySorted = new Stack<Node>();
+            LinkedList<int> topologicallySorted = new LinkedList<int>();
             bool[] marked = new bool[g.Capacity];
             Node temp;
             
@@ -49,7 +49,7 @@ namespace Graphs.Library
 
                     if (!hasUnvisitedEdges)
                     {
-                        topologicallySorted.Push(temp);
+                        topologicallySorted.AddFirst(temp.Index);
                         stack.Pop();
                     }
                 }
@@ -106,15 +106,15 @@ namespace Graphs.Library
             {
                 scc[i] = -1;
             }
-            IEnumerable<Node> topological = TopologicalSort(g);
+            IEnumerable<int> topological = TopologicalSort(g);
             Graph reverse = g.Reverse();
             // NOTE: this array does the work of Node.Visited property. so when we get rid of Node.Visited property,
             //      we should use a data structure similar to this.
             bool[] marked = new bool[reverse.Capacity];
             int counter = 0;
-            foreach (Node n in topological)
+            foreach (int n in topological)
             {
-                if (marked[n.Index])
+                if (marked[n])
                 {
                     continue;
                 }
@@ -134,15 +134,38 @@ namespace Graphs.Library
         /// to determine whether it has a Hamiltonian path (a simple path that visits every vertex), and if so, find one.
         /// (from coursera)
         /// </summary>
-        /// <param name="g">The directed acyclic graph.</param>
+        /// <param name="dag">The directed acyclic graph.</param>
         /// <returns>A path that goes through every vertex.</returns>
-        public static IEnumerable<int> HamiltonianPathInDAG(Graph g)
+        public static IEnumerable<int> HamiltonianPathInDAG(Graph dag)
         {
+            if (dag.Count == 0)
+            {
+                throw new ArgumentException("The graph is empty.");
+            }
+            if (dag.Count == 1)
+            {
+                return new List<int>() { dag[0].Index };
+            }
             // idea: first topologically sort the graph. this should be fine because every dag can be topologically sorted.
             // then every edge will be pointing forward. if there is an edge between each pair of adjacent topologically sorted
             // vertices then hamiltonian path exists and that is the hamiltonian path.
 
-            throw new NotImplementedException();
+            LinkedList<int> topological = TopologicalSort(dag);
+            List<int> path = new List<int>();
+            LinkedListNode<int> first = topological.First;
+            LinkedListNode<int> second = first.Next;
+            path.Add(first.Value);
+            while (second != null)
+            {
+                if (!dag[first.Value].Edges.Any(e => e.ToIndex == second.Value))
+                {
+                    return new List<int>();
+                }
+                path.Add(second.Value);
+                first = first.Next;
+                second = second.Next;
+            }
+            return path;
         }
 
         /// <summary>
