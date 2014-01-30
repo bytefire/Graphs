@@ -171,6 +171,7 @@ namespace Graphs.Library
         /// <summary>
         /// Design a linear-time algorithm to determine whether a DAG has a vertex that is 
         /// reachable from every other vertex, and if so, find one. 
+        /// (from coursera)
         /// </summary>
         /// <param name="dag">The directed acyclic graph.</param>
         /// <returns>Index of the reachable vertex (node) if it exists; -1 otherwise.</returns>
