@@ -196,6 +196,12 @@ namespace Graphs.Library
             return vertex;
         }
         
+        /// <summary>
+        /// Design a linear-time algorithm to determine whether a digraph has a vertex that is 
+        /// reachable from every other vertex, and if so, find one. (from coursera)
+        /// </summary>
+        /// <param name="g">The directed graph.</param>
+        /// <returns>Set of vertices which are reachable from every other vertex in the graph.</returns>
         public static List<int> ReachableVerticesInDirectedGraph(Graph g)
         {
             // idea: first find strongly connected components using kosaraju's algo. this will return an array whose integer values
