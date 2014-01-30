@@ -195,6 +195,53 @@ namespace Graphs.Library
             }
             return vertex;
         }
+        
+        public static List<int> ReachableVerticesInDirectedGraph(Graph g)
+        {
+            // idea: first find strongly connected components using kosaraju's algo. this will return an array whose integer values
+            // will represent a strongly connected component. we need to find a strongly connected component with "out-degree" of zero.
+            // here out-degree refers to the number of edges going out from one strongly-connected component to another.
+            // every vertex in the component with "out-degree" of zero will be reachable from every other vertex in the graph.
+
+            int[] scc = StronglyConnectedComponents(g);
+            HashSet<int> outEdgeComponents = new HashSet<int>();
+            for (int n = 0; n < scc.Length; n++)
+            {
+                if (!outEdgeComponents.Contains(scc[n]))
+                {
+                    // search for an edge going to a component other than scc[n]
+                    if (g[n].Edges.Any(e => scc[e.ToIndex] != scc[n]))
+                    {
+                        outEdgeComponents.Add(scc[n]);
+                    }
+                }
+            }
+
+            int motherComponent = -1;
+            bool found = false;
+            foreach (int component in scc)
+            {
+                if (!outEdgeComponents.Contains(component))
+                {
+                    if (found)
+                    {
+                        return new List<int>();
+                    }
+                    found = true;
+                    motherComponent = component;
+                }
+            }
+
+            List<int> reachableVertices = new List<int>();
+            for (int n = 0; n < scc.Length; n++)
+            {
+                if (scc[n] == motherComponent)
+                {
+                    reachableVertices.Add(n);
+                }
+            }
+            return reachableVertices;
+        }
 
         /// <summary>
         /// Shortest directed cycle. Given a digraph G, design an efficient algorithm to find a directed cycle 
