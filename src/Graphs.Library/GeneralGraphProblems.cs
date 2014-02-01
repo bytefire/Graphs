@@ -19,7 +19,7 @@ namespace Graphs.Library
             }
             Node root = g[startingNode];
             Stack<Node> stack = new Stack<Node>();
-            bool[] marked = new bool[g.Capacity];
+            bool[] marked = new bool[g.Count];
 
             marked[root.Index] = true;
             stack.Push(root);
@@ -47,7 +47,7 @@ namespace Graphs.Library
                 throw new ArgumentException("Graph is empty.");
             }
 
-            if (marked == null || marked.Length != g.Capacity)
+            if (marked == null || marked.Length != g.Count)
             {
                 throw new ArgumentException("The marked array's length must be equal to the capacity of the graph.");
             }
@@ -72,13 +72,13 @@ namespace Graphs.Library
                 throw new ArgumentException("Graph is empty.");
             }
 
-            int[] paths = new int[g.Capacity];
+            int[] paths = new int[g.Count];
             foreach (int p in paths)
             {
                 paths[p] = -1;
             }
             Queue<Node> q = new Queue<Node>();
-            bool[] marked = new bool[g.Capacity];
+            bool[] marked = new bool[g.Count];
             Node n = g[startingNode];
             
             marked[n.Index] = true;
@@ -117,13 +117,13 @@ namespace Graphs.Library
                 throw new ArgumentException("Graph is empty.");
             }
 
-            int[] paths = new int[g.Capacity];
+            int[] paths = new int[g.Count];
             foreach (int p in paths)
             {
                 paths[p] = -1;
             }
             Queue<Node> q = new Queue<Node>();
-            bool[] marked = new bool[g.Capacity];
+            bool[] marked = new bool[g.Count];
             Node n;
             foreach (int i in startingNodes)
             {

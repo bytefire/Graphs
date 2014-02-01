@@ -17,18 +17,7 @@ namespace Graphs.Library
         /// <summary>
         /// Gets the number of nodes in the graph.
         /// </summary>
-        /// <remarks>
-        /// This is different from capacity. this indicates how many vertices
-        /// the graph has. capacity is the maximum number of vertices the graph
-        /// could have.
-        /// </remarks>
         public int Count
-        {
-            get;
-            protected set;
-        }
-
-        public int Capacity
         {
             get;
             protected set;
@@ -92,7 +81,7 @@ namespace Graphs.Library
         // OptimiseTODO: this is O(V*E). can this be optimised?
         public Graph Reverse()
         {
-            Graph reverse = new Graph(this.Capacity);
+            Graph reverse = new Graph(this.Count);
             // first create all nodes
             foreach (Node n in _nodes)
             {

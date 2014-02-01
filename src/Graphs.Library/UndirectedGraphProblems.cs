@@ -24,7 +24,7 @@ namespace Graphs.Library
                     return false;
                 }
             }
-            bool[] marked = new bool[g.Capacity];
+            bool[] marked = new bool[g.Count];
             GeneralGraphProblems.PerformDfsItertatively(g, n => { marked[n.Index] = true; });
             foreach (Node n in g)
             {
@@ -55,7 +55,7 @@ namespace Graphs.Library
             {
                 // by the end of this loop startNode must be set to a non-null node because 
                 // g.Count > 0.
-                for (int i = 0; i < g.Capacity; i++)
+                for (int i = 0; i < g.Count; i++)
                 {
                     if (g[i] != null)
                     {
@@ -116,7 +116,7 @@ namespace Graphs.Library
 
             Node end1 = FindPathToFarthestNode(g);
             Node end2 = FindPathToFarthestNode(g);
-            int[] parents = new int[g.Capacity];
+            int[] parents = new int[g.Count];
             Array.ForEach(parents, p => p = -1);
 
             Node temp = end2;
@@ -148,10 +148,10 @@ namespace Graphs.Library
             Node farthest = root;
             int maximumDistance = 0;
             Stack<Node> stack = new Stack<Node>();
-            bool[] marked = new bool[g.Capacity];
-            int[] distances = new int[g.Capacity];
+            bool[] marked = new bool[g.Count];
+            int[] distances = new int[g.Count];
             Array.ForEach(distances, d => d = -1);
-            int[] parents = new int[g.Capacity];
+            int[] parents = new int[g.Count];
             Array.ForEach(parents, p => p = -1);
 
             distances[root.Index] = 0;

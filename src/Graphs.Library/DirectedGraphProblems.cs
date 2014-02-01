@@ -21,7 +21,7 @@ namespace Graphs.Library
 
             Stack<Node> stack = new Stack<Node>();
             LinkedList<int> topologicallySorted = new LinkedList<int>();
-            bool[] marked = new bool[g.Capacity];
+            bool[] marked = new bool[g.Count];
             Node temp;
             
             foreach (Node n in g)
@@ -68,7 +68,7 @@ namespace Graphs.Library
             // perform DFS looking for a back edge
             Node n = g[startingNode];
             Stack<Node> stack = new Stack<Node>();
-            bool[] marked = new bool[g.Capacity];
+            bool[] marked = new bool[g.Count];
             marked[n.Index] = true;
             stack.Push(n);
 
@@ -101,7 +101,7 @@ namespace Graphs.Library
                 throw new ArgumentException("Graph is empty.");
             }
 
-            int[] scc = new int[g.Capacity];
+            int[] scc = new int[g.Count];
             for (int i = 0; i < scc.Length; i++)
             {
                 scc[i] = -1;
@@ -110,7 +110,7 @@ namespace Graphs.Library
             Graph reverse = g.Reverse();
             // NOTE: this array does the work of Node.Visited property. so when we get rid of Node.Visited property,
             //      we should use a data structure similar to this.
-            bool[] marked = new bool[reverse.Capacity];
+            bool[] marked = new bool[reverse.Count];
             int counter = 0;
             foreach (int n in topological)
             {
@@ -261,8 +261,8 @@ namespace Graphs.Library
         /// <returns>List of indices for nodes which form the shortest cycle.</returns>
         public static IEnumerable<int> ShortestCycle(Graph g, int startingIndex = 0)
         {
-            bool[] marked = new bool[g.Capacity];
-            int[] connectedComponents = new int[g.Capacity];
+            bool[] marked = new bool[g.Count];
+            int[] connectedComponents = new int[g.Count];
             Array.ForEach(connectedComponents, cc => cc = -1);
             int currentComponent = 0;
             int shortestLength = Int32.MaxValue;
@@ -313,8 +313,8 @@ namespace Graphs.Library
             // idea: perform a BFS and look for back edges and keep a running count for each back edge. at the end of BFS, shortest count
             // should represent shortest cycle.
             Queue<Node> q = new Queue<Node>();
-            int[] levels = new int[g.Capacity];
-            int[] parents = new int[g.Capacity];
+            int[] levels = new int[g.Count];
+            int[] parents = new int[g.Count];
             Array.ForEach(parents, p => p = -1);
             int currentLevel = 0;
             Node n = g[startingNode];
