@@ -47,6 +47,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Graphs.Library\Graphs.Library.csproj">
+      <Project>{94109d47-0cdf-4a5a-9472-ebb7e27b979e}</Project>
+      <Name>Graphs.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphs.Utilities\Graphs.Utilities.csproj">
+      <Project>{67484c71-256c-4d45-8c9f-dcab8d113be6}</Project>
+      <Name>Graphs.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -72,7 +72,6 @@ namespace Graphs.Library
                     int fromIndex = nextNode.Index;
                     nextNode = g[e.ToIndex];
                     g.RemoveEdge(fromIndex, e.ToIndex);
-                    g.RemoveNodeIfUnconnected(fromIndex);
                 } while (nextNode != startNode);
 
                 // merge temp into eulerian cycle

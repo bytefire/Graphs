@@ -19,17 +19,27 @@ namespace Graphs.Library
         /// </summary>
         public int Count
         {
-            get;
-            protected set;
+            get
+            {
+                return _nodes.Length;
+            }
         }
 
-        public Graph(int capacity)
+        /// <summary>
+        /// Initialise graph with specified number of nodes and without any edges at all.
+        /// </summary>
+        /// <param name="count">Number of nodes in the graph.</param>
+        public Graph(int count)
         {
-            if (capacity < 1)
+            if (count < 1)
             {
-                throw new ArgumentException("Capacity should be at least 1.");
+                throw new ArgumentException("Number of nodes should be at least 1.");
             }
-            _nodes = new Node[capacity];
+            _nodes = new Node[count];
+            for (int i = 0; i < _nodes.Length; i++)
+            {
+                _nodes[i] = new Node(i);
+            }
         }
 
         public Node this[int index]
