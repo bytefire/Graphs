@@ -83,6 +83,7 @@ namespace Graphs.Library
         public virtual void InsertEdge(int nodeX, int nodeY, int weight = 0)
         {
             Edge e = new Edge();
+            e.FromIndex = nodeX;
             e.ToIndex = nodeY;
             e.Weight = weight;
             _nodes[nodeX].Edges.Add(e);

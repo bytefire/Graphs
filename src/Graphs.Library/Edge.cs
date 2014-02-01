@@ -8,6 +8,7 @@ namespace Graphs.Library
 {
     public class Edge
     {
+        public int FromIndex { get; set; }
         public int ToIndex { get; set; }
         public int Weight { get; set; }
     }
