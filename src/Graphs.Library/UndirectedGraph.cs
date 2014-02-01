@@ -19,7 +19,7 @@ namespace Graphs.Library
             base.RemoveEdge(nodeY, nodeX);
         }
 
-        public override void InsertEdge(int nodeX, int nodeY, int weight = 0)
+        public override void InsertEdge(int nodeX, int nodeY, double weight = 0)
         {
             base.InsertEdge(nodeX, nodeY, weight);
             base.InsertEdge(nodeY, nodeX, weight);

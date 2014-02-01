@@ -9,6 +9,7 @@ namespace Graphs.Library
     public class Node
     {
         public int Index { get; private set; }
+        // TODO: make data type of data generic
         public int Data { get; set; }
 
         public List<Edge> Edges { get; set; }

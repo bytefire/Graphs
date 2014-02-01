@@ -79,7 +79,7 @@ namespace Graphs.Library
             _nodes[nodeX].Edges.RemoveAt(i);
         }
 
-        public virtual void InsertEdge(int nodeX, int nodeY, int weight = 0)
+        public virtual void InsertEdge(int nodeX, int nodeY, double weight = 0)
         {
             Edge e = new Edge();
             e.FromIndex = nodeX;

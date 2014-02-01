@@ -24,13 +24,29 @@ namespace Graphs.Console
             child.AddLast(5);
 
             LinkedListNode<int> temp = parent.Find(2);
-            parent.AddAfter(temp, child.First);
+            //parent.AddAfter(temp, child.First);
 
             foreach (int val in parent)
             {
                 System.Console.Write("{0}, ", val);
             }
             System.Console.ReadKey();
+            // http://visualstudiomagazine.com/articles/2012/11/01/priority-queues-with-c.aspx
+
+            SortedDictionary<Guid, Edge> sortedEdges = new SortedDictionary<Guid, Edge>();
+            sortedEdges.Add(Guid.NewGuid(), new Edge() { FromIndex = 0, ToIndex = 1, Weight = 0.5 });
+            sortedEdges.Add(Guid.NewGuid(), new Edge() { FromIndex = 0, ToIndex = 1, Weight = 0.6 });
+            sortedEdges.Add(Guid.NewGuid(), new Edge() { FromIndex = 0, ToIndex = 1, Weight = 0.2 });
+            sortedEdges.Add(Guid.NewGuid(), new Edge() { FromIndex = 0, ToIndex = 1, Weight = 0.9 });
+            sortedEdges.Add(Guid.NewGuid(), new Edge() { FromIndex = 0, ToIndex = 1, Weight = 0.1 });
+            sortedEdges.Add(Guid.NewGuid(), new Edge() { FromIndex = 0, ToIndex = 1, Weight = 0.1 });
+            sortedEdges.Add(Guid.NewGuid(), new Edge() { FromIndex = 0, ToIndex = 1, Weight = 0.6 });
+            sortedEdges.Add(Guid.NewGuid(), new Edge() { FromIndex = 0, ToIndex = 1, Weight = 0.7 });
+            sortedEdges.Add(Guid.NewGuid(), new Edge() { FromIndex = 0, ToIndex = 1, Weight = 0.5 });
+            sortedEdges.Add(Guid.NewGuid(), new Edge() { FromIndex = 0, ToIndex = 1, Weight = 0.5 });
+            sortedEdges.Add(Guid.NewGuid(), new Edge() { FromIndex = 0, ToIndex = 1, Weight = 0.5 });
+
+            Edge min = sortedEdges.Min().Value;
         }
     }
 }

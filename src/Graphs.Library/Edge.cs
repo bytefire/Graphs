@@ -6,10 +6,18 @@ using System.Threading.Tasks;
 
 namespace Graphs.Library
 {
-    public class Edge
+    /// <summary>
+    /// Represents a directed edge.
+    /// </summary>
+    public class Edge : IComparable<Edge>
     {
         public int FromIndex { get; set; }
         public int ToIndex { get; set; }
-        public int Weight { get; set; }
+        public double Weight { get; set; }
+
+        int IComparable<Edge>.CompareTo(Edge other)
+        {
+            return this.Weight.CompareTo(other.Weight);
+        }
     }
 }
