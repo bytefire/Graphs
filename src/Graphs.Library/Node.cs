@@ -13,14 +13,6 @@ namespace Graphs.Library
 
         public List<Edge> Edges { get; set; }
 
-        // TODO: get rid of auxiliary properties
-        #region Auxiliary Properties
-        
-        public int Distance { get; set; }
-        public Node Parent { get; set; } // used for paths
-
-        #endregion
-
         public Node(int index)
         {
             Index = index;

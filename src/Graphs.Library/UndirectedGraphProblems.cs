@@ -111,11 +111,13 @@ namespace Graphs.Library
         /// </remarks>
         public Stack<Node> DiameterOfGraph(Graph g)
         {
-            // algo: first find the farthest node from given node (root). that will be one end of diameter.
+            // idea: first find the farthest node from given node (root). that will be one end of diameter.
             //      then find the farthest node from that node. the path thus obtained will be the diameter.
 
             Node end1 = FindPathToFarthestNode(g);
             Node end2 = FindPathToFarthestNode(g);
+            int[] parents = new int[g.Capacity];
+            Array.ForEach(parents, p => p = -1);
 
             Node temp = end2;
             Stack<Node> diameter = new Stack<Node>();
@@ -123,7 +125,7 @@ namespace Graphs.Library
             do
             {
                 diameter.Push(temp);
-                temp = temp.Parent;
+                temp = g[parents[temp.Index]];
             } while (temp != null);
 
             return diameter;
@@ -147,10 +149,13 @@ namespace Graphs.Library
             int maximumDistance = 0;
             Stack<Node> stack = new Stack<Node>();
             bool[] marked = new bool[g.Capacity];
+            int[] distances = new int[g.Capacity];
+            Array.ForEach(distances, d => d = -1);
+            int[] parents = new int[g.Capacity];
+            Array.ForEach(parents, p => p = -1);
 
-            root.Distance = 0;
+            distances[root.Index] = 0;
             marked[root.Index] = true;
-            root.Parent = null;
             stack.Push(root);
 
             Node temp;
@@ -166,17 +171,17 @@ namespace Graphs.Library
                     {
                         hasUnvisitedNeighbours = true;
                         marked[e.ToIndex] = true;
-                        g[e.ToIndex].Distance = temp.Distance + 1;
-                        g[e.ToIndex].Parent = temp;
+                        distances[g[e.ToIndex].Index] = distances[temp.Index] + 1;
+                        parents[ e.ToIndex] = temp.Index;
                         stack.Push(g[e.ToIndex]);
                     }
                 }
 
                 if (!hasUnvisitedNeighbours) // this is a leaf node
                 {
-                    if (temp.Distance > maximumDistance)
+                    if (distances[temp.Index] > maximumDistance)
                     {
-                        maximumDistance = temp.Distance;
+                        maximumDistance = distances[temp.Index];
                         farthest = temp;
                     }
                 }
