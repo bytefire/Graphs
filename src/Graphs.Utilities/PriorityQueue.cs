@@ -61,6 +61,50 @@ namespace Graphs.Utilities
             BubbleUp(Count - 1);
         }
 
+        public T ExtractMinimum()
+        {
+            if (Count < 0)
+            {
+                throw new Exception("The priority queue is empty.");
+            }
+
+            T minimum = _queue[0];
+            _queue[0] = _queue[Count - 1];
+            Count--;
+            BubbleDown(0);
+            return minimum;
+        }
+
+        private void BubbleDown(int p)
+        {
+            int minimumValueIndex = p;
+            int childIndex;
+
+            while (true)
+            {
+                childIndex = YoungChild(p);
+                // this loop finds the index with minimum value from among three elements: pth element and its two children
+                for (int i = 0; i <= 1; i++)
+                {
+                    if ((childIndex + i) < Count)
+                    {
+                        if (_queue[minimumValueIndex].CompareTo(_queue[childIndex + i]) > 0)
+                        {
+                            minimumValueIndex = childIndex + i;
+                        }
+                    }
+                }
+                if (minimumValueIndex == p)
+                {
+                    return;
+                }
+
+                SwapElementsAt(p, minimumValueIndex);
+                p = minimumValueIndex;
+                
+            }
+        }
+
         private void BubbleUp(int p)
         {
             // if root of the heap, i.e. no parent then return straightaway
