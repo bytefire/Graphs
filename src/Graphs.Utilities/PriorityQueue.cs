@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace Graphs.Utilities
 {
+    // ImproveTODO: add MakeHeap method on page 115 of the book. This is a faster way to make a heap of n elements,
+    //      compared to inserting each element one by one.
+
+    // TestTODO: one test of this will be to insert elements in any order, then retrieve them each one by repeatedly calling
+    //      GetMinimum method and then printing them. The elements should be in sort order. This is heapsort.
+
     /// <summary>
     /// A simple implementation of minimum priority queue using binary heap. 
     /// On reaching capacity, the priority doesn't resize. Instead it throws overflow
