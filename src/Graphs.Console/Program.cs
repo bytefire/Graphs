@@ -11,6 +11,26 @@ namespace Graphs.Console
     {
         static void Main(string[] args)
         {
+
+            Stack<int> stack = new Stack<int>();
+
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+            stack.Push(4);
+            stack.Push(5);
+            stack.Push(6);
+            stack.Push(7);
+            stack.Push(8);
+
+            foreach (int i in stack)
+            {
+                System.Console.WriteLine(i);
+            }
+
+            System.Console.WriteLine("stack.Count = " + stack.Count);
+
+
             LinkedList<int> parent = new LinkedList<int>();
             parent.AddLast(1);
             parent.AddLast(2);

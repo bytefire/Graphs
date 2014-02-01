@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="DirectedGraphProblems.cs" />
     <Compile Include="GeneralGraphProblems.cs" />
+    <Compile Include="MinimumSpanningTree.cs" />
     <Compile Include="UndirectedGraph.cs" />
     <Compile Include="UndirectedGraphProblems.cs" />
     <Compile Include="Edge.cs" />
