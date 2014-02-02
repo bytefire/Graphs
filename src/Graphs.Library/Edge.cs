@@ -19,5 +19,18 @@ namespace Graphs.Library
         {
             return this.Weight.CompareTo(other.Weight);
         }
+
+        public bool IsSameAs(Edge e, bool undirected = false)
+        {
+            if (!undirected)
+            {
+                return (this.FromIndex == e.FromIndex && this.ToIndex == e.ToIndex && this.Weight == e.Weight);
+            }
+            else
+            {
+                return ((this.FromIndex == e.FromIndex && this.ToIndex == e.ToIndex && this.Weight == e.Weight) ||
+                    (this.ToIndex == e.FromIndex && this.FromIndex == e.ToIndex && this.Weight == e.Weight));
+            }
+        }
     }
 }

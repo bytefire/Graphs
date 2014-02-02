@@ -178,5 +178,55 @@ namespace Graphs.Library
 
             return mbst;
         }
+
+        /// <summary>
+        /// Checks if the specified edge is part of any MST of the given graph. Note that
+        /// this method performs in linear time, O(E+V).
+        /// </summary>
+        /// <param name="e">Edge to check</param>
+        /// <param name="g">Graph in whose MST to check against.</param>
+        /// <returns>True if the edge exists in any MST of the graph; false otherwise.</returns>
+        public bool IsEdgeInMst(Edge e, UndirectedGraph g)
+        {
+            // algo: see http://stackoverflow.com/questions/7287899/find-whether-a-minimum-spanning-tree-contains-an-edge-in-linear-time
+            //  perform DFS looking for an alernate path between the two vertices such that every edge in the path
+            //  weighs less than the edge e. If suc an edge exists then return false, otherwise return true.
+
+            Stack<Node> stack = new Stack<Node>();
+            bool[] visited = new bool[g.Count];
+            stack.Push(g[e.FromIndex]);
+            visited[e.FromIndex] = true;
+
+            Node curr = null;
+            while (stack.Count > 0)
+            {
+                curr = stack.Pop();
+
+                foreach (Edge adj in curr.Edges)
+                {
+                    if(adj.IsSameAs(e))
+                    {
+                        continue;
+                    }
+                    if(adj.ToIndex == e.ToIndex )
+                    {
+                        if (adj.Weight < e.Weight)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    if (!visited[adj.ToIndex] && adj.Weight < e.Weight)
+                    {
+                        stack.Push(g[adj.ToIndex]);
+                        visited[adj.ToIndex] = true;
+                    }
+                }
+            }
+            return true;
+        }
     }
 }
