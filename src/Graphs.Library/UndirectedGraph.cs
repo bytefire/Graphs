@@ -8,8 +8,8 @@ namespace Graphs.Library
 {
     public class UndirectedGraph : Graph
     {
-        public UndirectedGraph(int capacity)
-            : base(capacity)
+        public UndirectedGraph(int count)
+            : base(count)
         {
         }
 

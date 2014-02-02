@@ -10,7 +10,7 @@ namespace Graphs.Library
     public class MinimumSpanningTree
     {
         /// <summary>
-        /// Finds the min spanning tree in an undirected weighted graph.
+        /// Finds the min spanning tree in an undirected weighted graph, using Kruskal's algorithm.
         /// </summary>
         /// <param name="g">Undirected weighted graph.</param>
         /// <returns>Minimum spanning tree</returns>
@@ -58,6 +58,47 @@ namespace Graphs.Library
                     break;
                 }
             }
+
+            return mst;
+        }
+
+        /// <summary>
+        /// Finds min spanning tree in an undirected graph using Prim's algorithm, the lazy approach.
+        /// </summary>
+        /// <param name="g">Undirected graph in which to look for MST.</param>
+        /// <returns>Minimum spanning tree</returns>
+        public UndirectedGraph Prim(UndirectedGraph g)
+        {
+            int maxNumberOfEdges = g.Count * (g.Count - 1) / 2;
+            PriorityQueue<Edge> priorityQueue = new PriorityQueue<Edge>(maxNumberOfEdges);
+            int edgeCount = 0; // counts number of edges currently in MST
+            UndirectedGraph mst = new UndirectedGraph(g.Count);
+            int newestVertex = 0;
+
+            do
+            {
+                foreach (Edge e in g[newestVertex].Edges)
+                {
+                    // this makes sure that the other vertex of the edge hasn't already been added to MST
+                    if (mst[e.ToIndex].Edges.Count == 0)
+                    {
+                        priorityQueue.Insert(e);
+                    }
+                }
+
+                bool found = false;
+                do
+                {
+                    Edge smallest = priorityQueue.ExtractMinimum();
+                    if (mst[smallest.ToIndex].Edges.Count == 0)
+                    {
+                        found = true;
+                        mst.InsertEdge(smallest.FromIndex, smallest.ToIndex, smallest.Weight);
+                        newestVertex = smallest.ToIndex;
+                        edgeCount++;
+                    }
+                } while (!found);
+            } while (edgeCount < g.Count - 1);
 
             return mst;
         }
