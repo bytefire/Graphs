@@ -102,5 +102,81 @@ namespace Graphs.Library
 
             return mst;
         }
+
+        public UndirectedGraph MinimumBottleneckSpanningTree(UndirectedGraph g)
+        {
+            // this is a modification of Prims
+            // select the smallest edge from vertex zero
+            // mark that as the current maximum
+            // add it to the graph
+            // then search for any edge that connects an unconnected vertex to the tree and its weight is less than current maximum
+
+            int edgeCount = 0; // counts number of edge currently in MST
+            UndirectedGraph mbst = new UndirectedGraph(g.Count);
+            int newestVertex = 0;
+            
+            Edge minEdge = new Edge { Weight = Double.MaxValue };
+            // Edge minEdgeSoFar = new Edge { Weight = Double.MaxValue };
+            foreach (Edge e in g[newestVertex].Edges)
+            {
+                if (minEdge.Weight > e.Weight)
+                {
+                    minEdge = e;
+                }
+            }
+
+            mbst.InsertEdge(minEdge.FromIndex, minEdge.ToIndex, minEdge.Weight);
+            edgeCount++;
+            newestVertex = minEdge.ToIndex;
+            double currentMax = minEdge.Weight;
+            List<Edge> candidateEdges = new List<Edge>();
+
+            do
+            {
+                foreach (Edge e in g[newestVertex].Edges)
+                {
+                    // this makes sure that the other vertex of the edge hasn't already been added to MST
+                    if (mbst[e.ToIndex].Edges.Count == 0)
+                    {
+                        candidateEdges.Add(e);
+                    }
+                }
+
+                bool found = false;
+                Edge nextSmallestEdge = new Edge { Weight = Double.MaxValue };
+                foreach (Edge c in candidateEdges)
+                {
+                    if (mbst[c.ToIndex].Edges.Count == 0)
+                    {
+                        if (c.Weight <= currentMax)
+                        {
+                            mbst.InsertEdge(c.FromIndex, c.ToIndex, c.Weight);
+                            newestVertex = c.ToIndex;
+                            edgeCount++;
+                            found = true;
+                            break;
+                        }
+                        else
+                        {
+                            if (nextSmallestEdge.Weight > c.Weight)
+                            {
+                                nextSmallestEdge = c;
+                            }
+                        }
+                    }
+                }
+
+                if (!found)
+                {
+                    currentMax = nextSmallestEdge.Weight;
+                    mbst.InsertEdge(nextSmallestEdge.FromIndex, nextSmallestEdge.ToIndex, nextSmallestEdge.Weight);
+                    newestVertex = nextSmallestEdge.ToIndex;
+                    edgeCount++;
+                }
+
+            } while (edgeCount < g.Count - 1);
+
+            return mbst;
+        }
     }
 }
