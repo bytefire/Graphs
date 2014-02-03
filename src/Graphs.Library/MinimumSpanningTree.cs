@@ -228,5 +228,65 @@ namespace Graphs.Library
             }
             return true;
         }
+        
+        public List<Edge> MinimumWeightEdgeFeedbackSet(UndirectedGraph g)
+        {
+            // 1. negate all weights in the graph
+            // 2. perform kruskal's
+            // 3. store any edge that is ignored by kruskal's into a list
+            // 4. iterate through the list and negate the weights again
+            // 5. return the list
+
+            List<Edge> minWeightFeedbackSet = new List<Edge>();
+
+            UndirectedGraph mst = new UndirectedGraph(g.Count);
+            int maxNumberOfEdges = g.Count * (g.Count - 1) / 2;
+            PriorityQueue<Edge> priorityQueue = new PriorityQueue<Edge>(maxNumberOfEdges);
+            HashSet<Tuple<int, int>> alreadyIncludedEdges = new HashSet<Tuple<int, int>>();
+            foreach (Node n in g)
+            {
+                foreach (Edge e in n.Edges)
+                {
+                    if (!alreadyIncludedEdges.Contains(new Tuple<int, int>(e.FromIndex, e.ToIndex)))
+                    {
+                        // since in undirected graph every directed edge must have a reverse edge
+                        // counterpart, we add this edge to the hashset in revers, i.e. ToIndex first and then FromIndex
+                        alreadyIncludedEdges.Add(new Tuple<int, int>(e.ToIndex, e.FromIndex));
+                        e.Weight *= -1;
+                        priorityQueue.Insert(e);
+                    }
+                }
+            }
+
+            DisjointSet disjointSet = new DisjointSet(g.Count);
+            Edge minEdge = null;
+            int edgeCount = 0;
+            while (priorityQueue.Count > 0)
+            {
+                minEdge = priorityQueue.ExtractMinimum();
+                // if the edge forms a cycle then discard that edge
+                if (disjointSet.AreSameSet(minEdge.FromIndex, minEdge.ToIndex))
+                {
+                    minEdge.Weight *= 1;
+                    minWeightFeedbackSet.Add(minEdge);
+                    continue;
+                }
+                disjointSet.Union(minEdge.FromIndex, minEdge.ToIndex);
+                mst.InsertEdge(minEdge.FromIndex, minEdge.ToIndex, minEdge.Weight);
+                edgeCount++;
+                if (edgeCount == mst.Count - 1)
+                {
+                    break;
+                }
+            }
+
+            // any remaining edges
+            while (priorityQueue.Count > 0)
+            {
+                minEdge.Weight *= 1;
+                minWeightFeedbackSet.Add(minEdge);
+            }
+            return minWeightFeedbackSet;
+        }
     }
 }
