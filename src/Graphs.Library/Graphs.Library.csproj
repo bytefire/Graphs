@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DirectedGraphProblems.cs" />
+    <Compile Include="DjikstraShortestPath.cs" />
     <Compile Include="GeneralGraphProblems.cs" />
     <Compile Include="MinimumSpanningTree.cs" />
     <Compile Include="UndirectedGraph.cs" />
